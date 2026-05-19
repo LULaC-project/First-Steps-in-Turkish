@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>W1 · Day 1 · Grammar: Plural Suffixes — First Steps in Turkish</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --teal:       #1B6B7B;
+  --teal-dark:  #145666;
+  --teal-light: #e8f3f5;
+  --peach:      #F9EDE8;
+  --peach-mid:  #f0d8d0;
+  --orange:     #E8531C;
+  --orange-light: #fdeee7;
+  --blue:       #B8D4E8;
+  --blue-light: #eaf3f9;
+  --white:      #ffffff;
+  --text:       #1a1a1a;
+  --text-muted: #5a6a70;
+  --font: "Nunito", sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--peach);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── PROGRESS BAR ── */
+#progress {
+  position: fixed; top: 0; left: 0; height: 4px;
+  background: var(--orange); width: 25%;
+  transition: width 0.4s ease; z-index: 200;
+}
+
+/* ── HEADER ── */
+.site-header {
+  background: var(--teal);
+  padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 12px rgba(27,107,123,0.25);
+  min-height: 64px;
+}
+.site-header img { height: 36px; filter: brightness(0) invert(1); }
+.breadcrumb {
+  font-size: 12px; font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.04em;
+}
+.breadcrumb b { color: white; }
+
+/* ── SLIDE SYSTEM ── */
+.slides-wrap {
+  max-width: 780px; margin: 0 auto;
+  padding: 0 28px 120px;
+}
+.slide { display: none; padding-top: 48px; animation: slideIn 0.4s ease; }
+.slide.active { display: block; }
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── SLIDE HEADER ── */
+.slide-header {
+  background: var(--teal);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.slide-header::after {
+  content: "";
+  position: absolute; right: -20px; top: -20px;
+  width: 120px; height: 120px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+}
+.slide-label {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.slide-label::before {
+  content: ""; display: inline-block;
+  width: 20px; height: 2px; background: var(--orange);
+}
+.slide-header h1 {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800; color: white; line-height: 1.2;
+}
+.slide-header h1 em { font-style: italic; color: var(--blue); }
+.slide-header p {
+  font-size: 1rem; color: rgba(255,255,255,0.75);
+  margin-top: 10px; max-width: 540px; line-height: 1.65;
+}
+
+/* ── AUDIO SCRIPT BOX ── */
+.script-box {
+  background: var(--white);
+  border-left: 4px solid var(--teal);
+  border-radius: 0 10px 10px 0;
+  padding: 18px 22px; margin: 24px 0;
+}
+.script-label {
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--teal); display: block; margin-bottom: 10px;
+}
+.script-box p {
+  font-size: 0.93rem; color: var(--text-muted);
+  line-height: 1.75; margin-bottom: 6px;
+}
+.script-box p:last-child { margin-bottom: 0; }
+.script-box strong { color: var(--text); font-weight: 700; }
+.script-box em { color: var(--teal); }
+
+/* ── WORD PAIRS ── */
+.word-pairs {
+  background: var(--white);
+  border-radius: 12px; padding: 24px 28px;
+  margin: 20px 0;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.word-pair {
+  display: flex; align-items: center; gap: 16px;
+  font-size: 1.25rem; font-weight: 600;
+}
+.wp-singular { color: var(--text-muted); min-width: 150px; font-style: italic; }
+.wp-arrow { color: var(--peach-mid); font-size: 1rem; }
+.wp-plural { color: var(--text); }
+.wp-suffix { color: var(--orange); font-weight: 800; }
+.wp-suffix.blue { color: var(--teal); }
+
+/* ── LISTEN & REPEAT GRID ── */
+.repeat-note {
+  font-size: 0.9rem; font-weight: 700;
+  color: var(--teal); margin: 20px 0 12px;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.repeat-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 10px; margin-bottom: 8px;
+}
+.repeat-card {
+  background: var(--teal);
+  border-radius: 10px; padding: 16px 18px;
+  text-align: center;
+}
+.repeat-card .tr-word {
+  font-size: 1.2rem; font-weight: 800; color: white;
+}
+.repeat-card .tr-word b { color: var(--blue); }
+.repeat-card .tr-word b.orange { color: #ffb08a; }
+.repeat-card .en-word {
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: rgba(255,255,255,0.5); margin-top: 4px;
+}
+
+/* ── INFO BOX ── */
+.info-box {
+  background: var(--orange-light);
+  border-left: 4px solid var(--orange);
+  border-radius: 0 10px 10px 0;
+  padding: 14px 20px; margin: 20px 0;
+  font-size: 0.93rem; line-height: 1.7; color: var(--text);
+}
+.info-box strong { font-weight: 800; }
+.info-box.blue-box {
+  background: var(--blue-light);
+  border-color: var(--teal);
+}
+
+/* ── ECHO TEST ── */
+.echo-arena {
+  background: var(--teal);
+  border-radius: 16px; padding: 36px 32px;
+  text-align: center; margin: 24px 0;
+}
+.word-chips {
+  display: flex; justify-content: center;
+  gap: 8px; flex-wrap: wrap; margin-bottom: 28px;
+}
+.wc {
+  font-family: var(--font); font-size: 12px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.08);
+  border: 2px solid rgba(255,255,255,0.12);
+  padding: 7px 16px; border-radius: 20px;
+  cursor: pointer; transition: all 0.2s;
+}
+.wc:hover { color: white; border-color: rgba(255,255,255,0.4); }
+.wc.active {
+  color: white; background: var(--orange);
+  border-color: var(--orange);
+}
+.echo-tr {
+  font-size: clamp(2.4rem, 7vw, 4rem);
+  font-weight: 800; color: white; line-height: 1;
+  margin-bottom: 6px;
+}
+.echo-en {
+  font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4); margin-bottom: 28px;
+}
+.echo-btns {
+  display: flex; justify-content: center;
+  gap: 14px; margin-bottom: 20px; flex-wrap: wrap;
+}
+.eb {
+  font-family: var(--font); font-size: 1.25rem; font-weight: 800;
+  padding: 16px 40px; border: none; border-radius: 50px;
+  cursor: pointer; transition: all 0.2s; letter-spacing: 0.04em;
+}
+.eb.lar { background: var(--orange); color: white; }
+.eb.ler { background: var(--blue); color: var(--teal); }
+.eb:hover { transform: scale(1.07); filter: brightness(1.08); }
+.eb.correct { box-shadow: 0 0 0 3px white, 0 0 20px rgba(255,255,255,0.25); transform: scale(1.07); }
+.eb.wrong { opacity: 0.25; transform: scale(0.94); pointer-events: none; }
+.echo-fb {
+  font-size: 0.95rem; font-weight: 600;
+  color: rgba(255,255,255,0.5); font-style: italic;
+  min-height: 22px; transition: color 0.3s;
+}
+.echo-fb.ok { color: #a8e6c8; }
+
+/* ── CITY CARDS ── */
+.city-strip {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 12px; margin: 20px 0;
+}
+.city-card {
+  background: var(--white); border-radius: 12px;
+  padding: 20px 14px; text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 2px solid transparent;
+}
+.city-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(27,107,123,0.12);
+  border-color: var(--teal-light);
+}
+.city-card .em { font-size: 2rem; display: block; margin-bottom: 8px; }
+.city-card .tr { font-size: 1.05rem; font-weight: 800; color: var(--text); }
+.city-card .pl { font-size: 0.88rem; color: var(--text-muted); margin-top: 4px; }
+.city-card .pl b { color: var(--orange); font-weight: 800; }
+.city-card.teal-card .pl b { color: var(--teal); }
+.city-card .en-label {
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: #bbb; margin-top: 6px;
+}
+
+/* ── VOWEL CARD ── */
+.vowel-card {
+  border-radius: 12px; padding: 24px 22px; margin: 16px 0;
+}
+.vowel-card.deep {
+  background: var(--orange-light);
+  border: 2px solid #f2c4b0;
+}
+.vowel-card.bright {
+  background: var(--blue-light);
+  border: 2px solid #b0ccde;
+}
+.vc-label {
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.vowel-card.deep .vc-label { color: var(--orange); }
+.vowel-card.bright .vc-label { color: var(--teal); }
+.v-letters { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+.vl {
+  font-size: 1.5rem; font-weight: 800;
+  width: 42px; height: 42px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px;
+}
+.vowel-card.deep .vl { background: rgba(232,83,28,0.12); color: var(--orange); }
+.vowel-card.bright .vl { background: rgba(27,107,123,0.12); color: var(--teal); }
+.vc-suffix {
+  font-size: 1.4rem; font-weight: 800; margin-bottom: 14px;
+}
+.vowel-card.deep .vc-suffix { color: var(--orange); }
+.vowel-card.bright .vc-suffix { color: var(--teal); }
+.v-examples { display: flex; flex-direction: column; gap: 8px; }
+.ve {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.95rem; font-weight: 600;
+}
+.ve .va { color: #bbb; }
+.vowel-card.deep .ve b { color: var(--orange); font-weight: 800; }
+.vowel-card.bright .ve b { color: var(--teal); font-weight: 800; }
+
+/* ── TWO COL SUMMARY ── */
+.two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+
+/* ── SECTION DIVIDER ── */
+.section-rule {
+  border: none; border-top: 2px solid var(--peach-mid);
+  margin: 32px 0 24px;
+}
+.section-title {
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 14px;
+}
+
+/* ── BOTTOM NAV ── */
+.nav-bar {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--teal);
+  border-radius: 50px; padding: 10px 16px;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 6px 28px rgba(27,107,123,0.35);
+  z-index: 50;
+}
+.nb {
+  font-family: var(--font); font-size: 0.88rem; font-weight: 700;
+  color: rgba(255,255,255,0.55); background: none; border: none;
+  cursor: pointer; padding: 8px 18px; border-radius: 30px;
+  transition: all 0.2s; white-space: nowrap;
+}
+.nb:hover:not(:disabled) { background: rgba(255,255,255,0.12); color: white; }
+.nb:disabled { opacity: 0.2; cursor: default; }
+.nb.primary { background: var(--orange); color: white; }
+.nb.primary:hover:not(:disabled) { background: #d44618; }
+.ndots { display: flex; gap: 6px; align-items: center; }
+.dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  cursor: pointer; transition: all 0.2s;
+}
+.dot.active { background: var(--orange); transform: scale(1.35); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .site-header { padding: 0 20px; }
+  .slides-wrap { padding: 0 16px 120px; }
+  .slide-header { padding: 22px 20px; }
+  .city-strip { grid-template-columns: repeat(2, 1fr); }
+  .two-cols { grid-template-columns: 1fr; }
+  .echo-btns { flex-direction: column; align-items: center; }
+  .eb { width: 100%; max-width: 220px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAEaAZADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9U6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKTI9aWgAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA83/aL8dar8NPgt4p8TaI0Kapp8CSQNcR+YgJlRTlcjPDHvXzt+yL+1R48+MnxYm0DxJNpsmnJpk90BaWXlPvV4wPm3HjDHivaf2yv+TZvHf8A16R/+j46+OP+CeX/ACX+6/7Al1/6Mhr2MPShLCVJtar/ACR4GKrVIY6lTjJ2dtPmz9L6KKK8c98KKKKAPnb9tT4yeKfgv4H0DU/Ct3BZ3d3qf2aZp7ZZgY/JdsAN05Uc1zv7EXx98Z/Gy78YR+LL62vF05LVrcW9okG0uZd2dvX7i1l/8FKf+SYeFP8AsN/+28tcd/wTJ/5CHxC/652H8569qNKDwDnbXv8AM+elWqf2kqfM+Xt02PvCiiivFPoQrzr9ofxlqvw9+C3i3xFok0dvqun2Zmt5ZYxIqtuUZKng8E16LXj37Xv/ACbZ4/8A+wcf/Q0raik6sU+6MMQ3GjNrez/I+dP2VP2rPiP8U/jXpfhzxFqlndaTPbXUkkUNhHExZI9y/MOetbf7XX7VHjz4N/FeDQPDc2mx6c+mQXRF3Zea+9nkB+bcOMIOK8H/AGEP+TltE/68r3/0VW1/wUO/5L/a/wDYEtf/AEZNX0DoUvrihyq3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PZU0rv8ANagq1VtJLfyenr3Orl+N3gaFLOQ+JLNoLpEkS4j3PEiu21TJIAViyQR+8K8gjtXcda8f0nwhe2/w5+K1idJkjn1XUdZmht/KwboSoQjAfxb+APWvSPBkFxbeENEhu0eO6jsYElSX7yuI1DA++c1nUhCK902ozqSfvrobNFFFc51BRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUmB6UtFACUYpaKAExRilooAKSlooATFGKWigBMUYpaKACkwKWigArnfGHgaw8ZR2TXE13Y31hKZ7PUNPmMNxbuVKttbkEMpIKsCpHUcCuioppuLuiZRUlaRzfhDwLY+D5L+4iuLzUtS1B1a71HUZvNnm2ghFJAAVVBOFUADJOMkk9HilopuTk7sIxUFaImK5LxN8N7PxDrSaxb6nqmg6sIBayXmk3AiaaEEsqSKysjBSzFSVyu5sEZNddRRGTi7oUoqatIyPCvhXT/B2ixaZpsbrArPK8k0jSyzSOxeSSR2JLuzEsWPUmtalopNtu7KSUVZbBSUtFIYUmKWigBMUYpaKACkxS0UAJiloooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/Z" alt="LULaC — Lesser used languages classroom">
+  <div class="breadcrumb">First Steps in Turkish &nbsp;·&nbsp; <b>Week 1 · Day 1</b> &nbsp;·&nbsp; Grammar</div>
+</header>
+
+<main class="slides-wrap">
+
+<!-- ══ SLIDE 1 ══ -->
+<section class="slide active" id="slide-1">
+  <div class="slide-header">
+    <div class="slide-label">01 / 04 &nbsp;·&nbsp; Plurals · First Listen</div>
+    <h1>Welcome to <em>İstanbul.</em></h1>
+    <p>It's a big city. It's busy. And there's always more than one of everything — taxis, bridges, voices. Today we start listening to how Turkish handles that.</p>
+  </div>
+
+  <div class="script-box">
+    <span class="script-label">🎙 Audio script</span>
+    <p>In Turkish, when something becomes more than one, we add a small piece at the end. The good news? It's <strong>way easier than in many languages.</strong> In English you have 'cats', 'buses', 'children'… lots of exceptions. In Turkish? Let's start by just <strong>feeling</strong> how it works. Listen:</p>
+  </div>
+
+  <div class="word-pairs">
+    <div class="word-pair"><span class="wp-singular">Araba</span><span class="wp-arrow">→</span><span class="wp-plural">Araba<span class="wp-suffix">lar</span></span></div>
+    <div class="word-pair"><span class="wp-singular">Otel</span><span class="wp-arrow">→</span><span class="wp-plural">Otel<span class="wp-suffix blue">ler</span></span></div>
+    <div class="word-pair"><span class="wp-singular">Arkadaş</span><span class="wp-arrow">→</span><span class="wp-plural">Arkadaş<span class="wp-suffix">lar</span></span></div>
+    <div class="word-pair"><span class="wp-singular">Merhaba</span><span class="wp-arrow">→</span><span class="wp-plural">Merhaba<span class="wp-suffix">lar</span></span></div>
+    <div class="word-pair"><span class="wp-singular">Genç</span><span class="wp-arrow">→</span><span class="wp-plural">Genç<span class="wp-suffix blue">ler</span></span></div>
+    <div class="word-pair"><span class="wp-singular">Teşekkür</span><span class="wp-arrow">→</span><span class="wp-plural">Teşekkür<span class="wp-suffix blue">ler</span></span></div>
+  </div>
+
+  <div class="info-box">
+    <strong>Just listen for now.</strong> Some plurals sound heavier, some lighter. Notice it — don't analyse it yet. Turkish is very musical like that.
+  </div>
+
+  <p class="repeat-note">🔊 Now listen and repeat:</p>
+  <div class="repeat-grid">
+    <div class="repeat-card"><div class="tr-word">kitap<b class="orange">lar</b></div><div class="en-word">books</div></div>
+    <div class="repeat-card"><div class="tr-word">araba<b class="orange">lar</b></div><div class="en-word">cars</div></div>
+    <div class="repeat-card"><div class="tr-word">ev<b>ler</b></div><div class="en-word">houses</div></div>
+    <div class="repeat-card"><div class="tr-word">kedi<b>ler</b></div><div class="en-word">cats</div></div>
+  </div>
+</section>
+
+<!-- ══ SLIDE 2 ══ -->
+<section class="slide" id="slide-2">
+  <div class="slide-header">
+    <div class="slide-label">02 / 04 &nbsp;·&nbsp; The Echo Test</div>
+    <h1>Which one <em>echoes</em> better?</h1>
+    <p>Your ears already know the answer. You're not memorising rules — you're <em>listening</em>. Pick a word, then tap the suffix that sounds right.</p>
+  </div>
+
+  <div class="echo-arena">
+    <div class="word-chips" id="wordSelector">
+      <div class="wc active" data-word="Banka" data-en="bank" data-correct="lar">Banka</div>
+      <div class="wc" data-word="Otel" data-en="hotel" data-correct="ler">Otel</div>
+      <div class="wc" data-word="Durak" data-en="bus stop" data-correct="lar">Durak</div>
+      <div class="wc" data-word="Müze" data-en="museum" data-correct="ler">Müze</div>
+      <div class="wc" data-word="Araba" data-en="car" data-correct="lar">Araba</div>
+      <div class="wc" data-word="Ofis" data-en="office" data-correct="ler">Ofis</div>
+    </div>
+    <div class="echo-tr" id="echoWord">Banka</div>
+    <div class="echo-en" id="echoEn">bank</div>
+    <div class="echo-btns">
+      <button class="eb lar" onclick="checkEcho('lar')">— LAR</button>
+      <button class="eb ler" onclick="checkEcho('ler')">— LER</button>
+    </div>
+    <div class="echo-fb" id="echoFb">Tap -LAR or -LER · which sounds right?</div>
+  </div>
+
+  <div class="script-box">
+    <span class="script-label">🎙 Audio script</span>
+    <p>Listen to this word: <strong>Banka</strong>. Which one echoes better — Banka-lar? or Banka-ler? <em>(pause 3 seconds)</em></p>
+    <p>If you felt like <strong>-lar</strong> fits better, you're right! Let's try another: <strong>Otel</strong>. Otel-lar? or Otel-ler? <em>(pause)</em> Oteller! Your ears are already doing the work. You are not memorising. You are listening.</p>
+  </div>
+</section>
+
+<!-- ══ SLIDE 3 ══ -->
+<section class="slide" id="slide-3">
+  <div class="slide-header">
+    <div class="slide-label">03 / 04 &nbsp;·&nbsp; Deep Vowels</div>
+    <h1>The <em>"A" Echo</em></h1>
+    <p>Some words carry a deep, open sound. Look at the last vowel — it comes from the back of the mouth. The plural echoes that depth with an A.</p>
+  </div>
+
+  <div class="city-strip">
+    <div class="city-card"><span class="em">🚗</span><div class="tr">Araba</div><div class="pl">Araba<b>lar</b></div><div class="en-label">car</div></div>
+    <div class="city-card"><span class="em">🏦</span><div class="tr">Banka</div><div class="pl">Banka<b>lar</b></div><div class="en-label">bank</div></div>
+    <div class="city-card"><span class="em">🚌</span><div class="tr">Durak</div><div class="pl">Durak<b>lar</b></div><div class="en-label">bus stop</div></div>
+  </div>
+
+  <div class="info-box">
+    The last vowel of <strong>Araba</strong> is <strong>a</strong>. <strong>Banka → a</strong>. <strong>Durak → a</strong>. Deep vowel, deep echo. It's a rhythmic beat — <em>-lar, -lar, -lar.</em>
+  </div>
+
+  <div class="vowel-card deep">
+    <div class="vc-label">Back vowels · a &nbsp;ı &nbsp;o &nbsp;u → -LAR</div>
+    <div class="v-letters">
+      <div class="vl">a</div><div class="vl">ı</div><div class="vl">o</div><div class="vl">u</div>
+    </div>
+    <div class="v-examples">
+      <div class="ve"><span>🛣️</span><span>Yol &nbsp;→&nbsp; Yol<b>lar</b></span></div>
+      <div class="ve"><span>⛵</span><span>Vapur &nbsp;→&nbsp; Vapur<b>lar</b></span></div>
+      <div class="ve"><span>🌳</span><span>Park &nbsp;→&nbsp; Park<b>lar</b></span></div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <span class="script-label">🎙 Audio script</span>
+    <p>In the city, some words have a deep, open sound. Look at the last vowel: <strong>Araba… Banka… Durak…</strong></p>
+    <p>Araba-lar. Banka-lar. Durak-lar. It's a deep, rhythmic beat. Can you feel it?</p>
+  </div>
+</section>
+
+<!-- ══ SLIDE 4 ══ -->
+<section class="slide" id="slide-4">
+  <div class="slide-header">
+    <div class="slide-label">04 / 04 &nbsp;·&nbsp; Bright Vowels</div>
+    <h1>The <em>"E" Echo</em></h1>
+    <p>Now step into the neon lights. These words have a brighter, sharper sound — they don't like the heavy A. They want a light echo to match their vibe.</p>
+  </div>
+
+  <div class="city-strip">
+    <div class="city-card teal-card"><span class="em">🚌</span><div class="tr">Otobüs</div><div class="pl">Otobüs<b>ler</b></div><div class="en-label">bus</div></div>
+    <div class="city-card teal-card"><span class="em">💼</span><div class="tr">Ofis</div><div class="pl">Ofis<b>ler</b></div><div class="en-label">office</div></div>
+    <div class="city-card teal-card"><span class="em">🏛️</span><div class="tr">Müze</div><div class="pl">Müze<b>ler</b></div><div class="en-label">museum</div></div>
+  </div>
+
+  <div class="info-box blue-box">
+    <strong>Otobüs → ü &nbsp;·&nbsp; Ofis → i &nbsp;·&nbsp; Müze → e.</strong> Bright vowel, bright echo. The word and its plural are singing the same note.
+  </div>
+
+  <div class="vowel-card bright">
+    <div class="vc-label">Front vowels · e &nbsp;i &nbsp;ö &nbsp;ü → -LER</div>
+    <div class="v-letters">
+      <div class="vl">e</div><div class="vl">i</div><div class="vl">ö</div><div class="vl">ü</div>
+    </div>
+    <div class="v-examples">
+      <div class="ve"><span>🏨</span><span>Otel &nbsp;→&nbsp; Otel<b>ler</b></span></div>
+      <div class="ve"><span>🎫</span><span>Bilet &nbsp;→&nbsp; Bilet<b>ler</b></span></div>
+      <div class="ve"><span>🏪</span><span>Market &nbsp;→&nbsp; Market<b>ler</b></span></div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <span class="script-label">🎙 Audio script</span>
+    <p>Now, the neon lights. The last vowels sound brighter, sharper: <strong>Otobüs… Ofis… Müze…</strong></p>
+    <p>Otobüs-ler. Ofis-ler. Müze-ler. Hear how smooth that is? The word and its piece are singing the same note.</p>
+  </div>
+
+  <hr class="section-rule">
+  <p class="section-title">Summary · The two echoes</p>
+  <div class="two-cols">
+    <div class="vowel-card deep" style="margin:0">
+      <div class="vc-label">Deep · Back vowels</div>
+      <div class="v-letters"><div class="vl">a</div><div class="vl">ı</div><div class="vl">o</div><div class="vl">u</div></div>
+      <div class="vc-suffix">→ -LAR</div>
+      <div style="font-size:.85rem;color:#888;font-weight:600">Arabalar · Bankalar</div>
+    </div>
+    <div class="vowel-card bright" style="margin:0">
+      <div class="vc-label">Bright · Front vowels</div>
+      <div class="v-letters"><div class="vl">e</div><div class="vl">i</div><div class="vl">ö</div><div class="vl">ü</div></div>
+      <div class="vc-suffix">→ -LER</div>
+      <div style="font-size:.85rem;color:#888;font-weight:600">Oteller · Müzeler</div>
+    </div>
+  </div>
+  <div class="info-box" style="margin-top:16px">
+    <strong>The golden rule:</strong> The last vowel sets the echo — and every suffix that follows must stay in the same lane.
+  </div>
+</section>
+
+</main>
+
+<!-- NAVIGATION -->
+<nav class="nav-bar">
+  <button class="nb" id="prevBtn" onclick="goSlide(-1)" disabled>← Back</button>
+  <div class="ndots" id="dots">
+    <div class="dot active" onclick="goTo(0)"></div>
+    <div class="dot" onclick="goTo(1)"></div>
+    <div class="dot" onclick="goTo(2)"></div>
+    <div class="dot" onclick="goTo(3)"></div>
+  </div>
+  <button class="nb primary" id="nextBtn" onclick="goSlide(1)">Next →</button>
+</nav>
+
+<script>
+let cur = 0; const tot = 4;
+const slides = document.querySelectorAll('.slide');
+const dots   = document.querySelectorAll('.dot');
+const prog   = document.getElementById('progress');
+
+function goTo(n) {
+  slides[cur].classList.remove('active'); dots[cur].classList.remove('active');
+  cur = n;
+  slides[cur].classList.add('active'); dots[cur].classList.add('active');
+  document.getElementById('prevBtn').disabled = cur === 0;
+  const nb = document.getElementById('nextBtn');
+  nb.textContent = cur === tot-1 ? '✓ Done' : 'Next →';
+  nb.disabled = cur === tot-1;
+  prog.style.width = ((cur+1)/tot*100) + '%';
+  window.scrollTo(0, 0);
+}
+function goSlide(d) { const n=cur+d; if(n>=0&&n<tot) goTo(n); }
+document.addEventListener('keydown', e => {
+  if (e.key==='ArrowRight' && cur<tot-1) goSlide(1);
+  if (e.key==='ArrowLeft'  && cur>0)    goSlide(-1);
+});
+
+let cWord='Banka', cCorrect='lar';
+document.querySelectorAll('.wc').forEach(c => {
+  c.addEventListener('click', () => {
+    document.querySelectorAll('.wc').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    cWord=c.dataset.word; cCorrect=c.dataset.correct;
+    document.getElementById('echoWord').textContent = cWord;
+    document.getElementById('echoEn').textContent   = c.dataset.en;
+    const fb = document.getElementById('echoFb');
+    fb.textContent = 'Tap -LAR or -LER · which sounds right?';
+    fb.className = 'echo-fb';
+    document.querySelectorAll('.eb').forEach(b => b.classList.remove('correct','wrong'));
+  });
+});
+
+function checkEcho(choice) {
+  const fb = document.getElementById('echoFb');
+  document.querySelectorAll('.eb').forEach(b => b.classList.remove('correct','wrong'));
+  if (choice === cCorrect) {
+    document.querySelector('.eb.'+choice).classList.add('correct');
+    document.querySelector('.eb.'+(choice==='lar'?'ler':'lar')).classList.add('wrong');
+    fb.textContent = '✓ ' + cWord + (cCorrect==='lar'?'lar':'ler') + ' — your ears are doing the work!';
+    fb.className = 'echo-fb ok';
+  } else {
+    document.querySelector('.eb.'+choice).classList.add('wrong');
+    document.querySelector('.eb.'+cCorrect).classList.add('correct');
+    fb.textContent = "↺ Almost! It's " + cWord + (cCorrect==='lar'?'lar':'ler') + ' — feel the echo.';
+    fb.className = 'echo-fb';
+  }
+}
+prog.style.width = '25%';
+</script>
+</body>
+</html>
